@@ -24,6 +24,11 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven("https://jogamp.org/deployment/maven") {
+            mavenContent {
+                includeGroupAndSubgroups("io.github.kevinnzou")
+            }
+        }
         mavenCentral()
     }
 }

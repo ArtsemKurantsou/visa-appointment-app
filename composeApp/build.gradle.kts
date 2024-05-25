@@ -1,9 +1,9 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -14,7 +14,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -25,21 +25,13 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-        }
+        val commonMain by getting
     }
 }
 
@@ -75,5 +67,29 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+
+dependencies {
+    commonMainImplementation(compose.runtime)
+    commonMainImplementation(compose.foundation)
+    commonMainImplementation(compose.material3)
+    commonMainImplementation(compose.ui)
+    commonMainImplementation(compose.components.resources)
+    commonMainImplementation(compose.components.uiToolingPreview)
+    commonMainApi(libs.compose.web.view)
+    commonMainApi(libs.calf.ui)
+    commonMainImplementation(libs.multiplatform.settings)
+    commonMainImplementation(libs.multiplatform.settings.no.arg)
+    commonMainImplementation(libs.decompose)
+    commonMainImplementation(libs.decompose.compose.extensions)
+    commonMainImplementation(libs.kotlinx.datetime)
+    commonMainImplementation(libs.kotlinx.serialization.json)
+
+    commonMainImplementation(platform(libs.koin.bom))
+    commonMainImplementation(libs.koin.core)
+
+    commonMainImplementation(platform(libs.koin.annotations.bom))
+    commonMainImplementation(libs.koin.annotations)
+    kspCommonMainMetadata(libs.koin.ksp.compiler)
 }
 
