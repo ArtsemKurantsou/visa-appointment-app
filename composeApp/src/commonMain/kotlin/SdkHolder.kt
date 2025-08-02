@@ -6,4 +6,8 @@ object SdkHolder {
     }
 
     fun get(): SomeSdk = requireNotNull(sdk)
+
+    fun process(parameters: SdkParameters) {
+        // do something
+    }
 }
